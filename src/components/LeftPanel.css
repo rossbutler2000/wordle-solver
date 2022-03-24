@@ -1,0 +1,15 @@
+.error-row {
+  height: 100px
+}
+
+.header-row {
+  height: 140px
+}
+
+.reset-row {
+  height: 80px
+}
+
+.button.reset-button {
+  margin: 10px
+}

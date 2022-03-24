@@ -1,0 +1,9 @@
+.segment.word-box {
+  height: 500px;
+  margin: 20px;
+  overflow-y: scroll;
+}
+
+.input {
+  width: 85%
+}
