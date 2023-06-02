@@ -150,6 +150,7 @@ const eliminateWords = (selectedWord, wordList, colors) => {
           } else ignore[word[i]] = true;
           break;
 
+          //Add an or statement if the letter is in the word in another place
         case colorChoices[2]:
           if (!ignore[word[i]]) {
             if (word.indexOf(selectedWord[i]) > -1) {
