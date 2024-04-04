@@ -122,58 +122,83 @@ export const onSubmit = () => (dispatch, getState) => {
 }
 
 
+
+
 // External function which eliminates words from word list
 const eliminateWords = (selectedWord, wordList, colors) => {
+  // Functions
+  const replaceLetter = (word, index) => {
+    return word.substring(0, index) + "0" + word.substring(index+1, word.length);
+  }
+
+  // Variables
   const newList = [];
   const oldList = [...wordList];
+  const colorValues = {}
 
-  wordList.splice(wordList.indexOf(selectedWord), 1);
+  // Sorts letter to respective color value
+  for (let i = 0; i < selectedWord.length; i++) {
+    if (!colorValues[colors[i]]) {
+      colorValues[colors[i]] = [i];
+    } else colorValues[colors[i]].push(i);
+  }
   
+  // Finds words that fit parameters
   wordList.forEach(word => {
-    let end = false;
+    let possibleWord = true;
+    let checkedWord = word;
 
-    for (let i = 0; i < word.length; i++) {
-      const ignore = {};
 
-      switch (colors[i]) {
-        case colorChoices[0]:
-          if (word[i] != selectedWord[i]) {
-            end = true;
+    try { // Checks letter color values
+      // Green Letter
+      if (colorValues[colorChoices[0]]) {
+        colorValues[colorChoices[0]].forEach(index => {
+          if (checkedWord[index] != selectedWord[index]) {
+           throw "Cannot be this word";
           }
-          break;
-        
-        case colorChoices[1]:
-          if (word.indexOf(selectedWord[i]) == -1) {
-            end = true;
-          } else if (word[i] == selectedWord[i]) {
-            end = true;
-          } else ignore[word[i]] = true;
-          break;
-
-          //Add an or statement if the letter is in the word in another place
-        case colorChoices[2]:
-          if (!ignore[word[i]]) {
-            if (word.indexOf(selectedWord[i]) > -1) {
-              end = true;
-            }
+          else {
+            checkedWord = replaceLetter(checkedWord, index);
           }
-          break;
-
-        default:
-          console.log("This should never happen");
+        });
       }
 
-      if (end) break;
-    }
+      // Yellow Letter
+      if (colorValues[colorChoices[1]]) {
+        colorValues[colorChoices[1]].forEach(index => {
+          if (checkedWord.indexOf(selectedWord[index]) == -1 || checkedWord[index] == selectedWord[index]) {
+            throw "Cannot be this word";
+          }
+          else {
+            checkedWord = replaceLetter(checkedWord, checkedWord.indexOf(selectedWord[index]));
+          }
+        });
+      }
 
-    if (!end) {
-      newList.push(word);
+      // Grey Letter
+      if (colorValues[colorChoices[2]]) {
+        colorValues[colorChoices[2]].forEach(index => {
+          if (checkedWord.indexOf(selectedWord[index]) > -1) {
+            throw "Cannot be this word";
+          }
+        });
+      }
+    }
+    catch(error) { // When the word is not a possible word
+      console.log(checkedWord)
+      possibleWord = false;
+    }
+    finally { // When the word is a possible word
+      if (possibleWord) {
+        newList.push(word);
+      }
     }
   });
-
+  
+  // Returns list to be used
   if (newList.length === 0) {
     return oldList;
   }
-
-  return newList;
+  else {
+    return newList;
+  }
 }
