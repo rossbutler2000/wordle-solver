@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Container, Icon, List, Search, Segment } from "semantic-ui-react";
+import _ from "lodash";
 
 
 import { changeSearchWord, changeWord } from "../actions";
@@ -28,18 +29,31 @@ class WordList extends React.Component {
     this.props.changeWord(word);
     
   }
+  
+  wordValue = (word, letterPercent) => {
+    var value = 0;
+
+    for( let i=0; i<word.length; i++ ) {
+      value += letterPercent[word[i]]
+    }
+
+    return value;
+  }
 
 
   renderWords = (wordList) => {
     return wordList.map(word => {
       return (
         <List.Item key={word} onClick={() => this.handleWordChange(word)}>
-          {word == this.props.selectedWord ? <b>{word}</b> : <a>{word}</a>}
+          { word == this.props.selectedWord ? <b>{word}</b> : <a>{word}</a> }
         </List.Item>
       );
     });
   }
 
+
+
+  //New words
   render() {
     return (
       <Container>

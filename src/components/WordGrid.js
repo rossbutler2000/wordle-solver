@@ -14,7 +14,8 @@ import {
 import {
   colorChoices,
   defaultColor,
-  inputError
+  inputError,
+  wordList
 } from "../data/initialState";
 import "./WordGrid.css";
 
@@ -87,6 +88,8 @@ class WordGrid extends React.Component {
     this.props.changeColor(letterKey, color);
   }
 
+  
+
   handleSubmit = () => {
     const rowKey = this.props.rowKey;
     
@@ -146,7 +149,8 @@ const mapStateToProps = (state) => {
   return {
     allGuesses: state.allGuesses,
     bufferSize: state.bufferSize,
-    rowKey: state.rowKey
+    rowKey: state.rowKey,
+    wordList: state.wordList
   }
 }
 

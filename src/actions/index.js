@@ -84,6 +84,8 @@ export const lockAll = () => (dispatch, getState) => {
   dispatch({ type: GUESSES, payload: allGuesses });
 }
 
+
+
 export const onSubmit = () => (dispatch, getState) => {
   const { wordList, rowKey, allGuesses } = getState();
   let { colors, word } = {...allGuesses[rowKey]};
@@ -113,6 +115,47 @@ export const onSubmit = () => (dispatch, getState) => {
     };
     newGuesses[rowKey].locks = Array(5).fill(true);
     newGuesses[rowKey+1] = newGuess;
+
+    // Possible new list
+    const wordValue = (word, letterPercent) => {
+        var value = 0;
+    
+        for( let i=0; i<word.length; i++ ) {
+          value += letterPercent[word[i]]
+        }
+  
+        //console.log(value)
+        return value;
+    }
+
+    const test = { letterCount: {}, letterPercent: {}, letters: 0 };
+    var p = 0;
+
+    newList.forEach(word => {
+      for (let i=0; i<word.length; i++) {
+        test.letterCount[word[i]] = test.letterCount[word[i]] != null ? test.letterCount[word[0]]+1 : 1;
+        test.letters += 1;
+      }
+    });
+
+    Object.keys(test.letterCount).forEach(letter => {
+      test.letterPercent[letter] = test.letterCount[letter] / test.letters;
+      p += test.letterPercent[letter]
+    });
+
+
+    // const refinedList = newList.sort(word => {
+    //   return wordValue(word, test.letterPercent)
+    // })
+
+    const refinedList = [...newList.sort((a, b) => {
+      return wordValue(a, test.letterPercent) - wordValue(b, test.letterPercent)
+    })]
+
+    console.log(refinedList.reverse())
+
+
+    //
 
 
     dispatch({ type: ROW_KEY, payload: rowKey + 1 });
@@ -184,7 +227,6 @@ const eliminateWords = (selectedWord, wordList, colors) => {
       }
     }
     catch(error) { // When the word is not a possible word
-      console.log(checkedWord)
       possibleWord = false;
     }
     finally { // When the word is a possible word
