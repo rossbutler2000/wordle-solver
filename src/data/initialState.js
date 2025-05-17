@@ -1,6 +1,5 @@
 import { WORD_LIST } from "./WORDLIST";
 
-
 export const defaultColor = "black";
 export const allGuesses = [
   { colors: Array(5).fill(defaultColor),
@@ -23,4 +22,4 @@ export const inputError = "input"
 export const startingRowKey = 0;
 export const successMessage = false;
 export const wordListError = "wordList";
-export const wordList = [...WORD_LIST];
+export const wordList = WORD_LIST;

@@ -123,8 +123,7 @@ export const onSubmit = () => (dispatch, getState) => {
         for( let i=0; i<word.length; i++ ) {
           value += letterPercent[word[i]]
         }
-  
-        //console.log(value)
+        
         return value;
     }
 
@@ -143,14 +142,9 @@ export const onSubmit = () => (dispatch, getState) => {
       p += test.letterPercent[letter]
     });
 
-
-    // const refinedList = newList.sort(word => {
-    //   return wordValue(word, test.letterPercent)
-    // })
-
-    const refinedList = [...newList.sort((a, b) => {
+    const refinedList = [...newList].sort((a, b) => {
       return wordValue(a, test.letterPercent) - wordValue(b, test.letterPercent)
-    })]
+    })
 
     console.log(refinedList.reverse())
 

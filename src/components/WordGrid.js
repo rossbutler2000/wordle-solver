@@ -15,7 +15,6 @@ import {
   colorChoices,
   defaultColor,
   inputError,
-  wordList
 } from "../data/initialState";
 import "./WordGrid.css";
 
@@ -47,7 +46,7 @@ class WordGrid extends React.Component {
           disabled={locks[letterKey]}
           key={letterKey}
         >
-          <Grid columns={3}>
+          <Grid columns={5}>
             {this.colorOptions(letterKey)}
           </Grid>
         </Popup>
@@ -105,16 +104,16 @@ class WordGrid extends React.Component {
 
   guessGrid = () => {
     let rowKey = -1;
-    let buffer = this.props.bufferSize;
+    let buffer = 4; //this.props.bufferSize;
 
-    window.addEventListener("resize", () => {
+    // window.addEventListener("resize", () => {
 
-      if (window.innerWidth >= 1200 && this.props.bufferSize !== 4) {
-        this.props.changeBufferSize(4)
-      } else if (_.inRange(window.innerWidth, 990, 1201) && this.props.bufferSize !== 3) {
-        this.props.changeBufferSize(3)
-      }
-    });
+    //   if (window.innerWidth >= 1200 && this.props.bufferSize !== 4) {
+    //     this.props.changeBufferSize(4)
+    //   } else if (_.inRange(window.innerWidth, 990, 1201) && this.props.bufferSize !== 3) {
+    //     this.props.changeBufferSize(3)
+    //   }
+    // });
 
     return this.props.allGuesses.map(guess => {
       rowKey += 1;
@@ -152,7 +151,7 @@ const mapStateToProps = (state) => {
     rowKey: state.rowKey,
     wordList: state.wordList
   }
-}
+};
 
 export default connect(
   mapStateToProps,

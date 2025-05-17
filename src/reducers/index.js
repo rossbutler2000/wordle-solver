@@ -30,13 +30,13 @@ const allGuessesReducer = (guesses = allGuesses, action) => {
   return [...guesses];
 }
 
-const bufferSizeReducer = (size = bufferSize, action) => {
-  if (action.type === BUFFER_SIZE) {
-    return action.payload;
-  }
+// const bufferSizeReducer = (size = bufferSize, action) => {
+//   if (action.type === BUFFER_SIZE) {
+//     return action.payload;
+//   }
 
-  return size;
-}
+//   return size;
+// }
 
 const showErrorMessageReducer = (error = errorMessage, action) => {
   if (action.type === ERROR_MESSAGE) {
@@ -80,7 +80,7 @@ const rowKeyReducer = (key = startingRowKey, action) => {
 
 export default combineReducers({
   allGuesses: allGuessesReducer,
-  bufferSize: bufferSizeReducer,
+  //bufferSize: bufferSizeReducer,
   errorMessageValue: showErrorMessageReducer,
   rowKey: rowKeyReducer,
   searchWord: searchWordReducer,

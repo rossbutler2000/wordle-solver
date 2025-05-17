@@ -3,15 +3,19 @@ import _ from 'lodash';
 import { Container, Grid, Header, List, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
+import Tester from '../test/Tester';
+
 import LeftPanel from './LeftPanel';
 import RightPanel from './RightPanel';
 import "./Main.css";
+
 
 class Main extends React.Component {
 
   render() {
     return (
       <Container className="main-container" textAlign="center">
+        <Tester />
         <Segment className="main-segment">
           <Segment className="main-segment" raised>
             <Grid columns="equal" divided>
